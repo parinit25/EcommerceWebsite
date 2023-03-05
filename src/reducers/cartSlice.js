@@ -152,7 +152,7 @@ const cartSlice = createSlice({
       const existingMerchandise = state.cartBandMerchandise.find(
         (item) => item.id === merchandise.id
       );
-      console.log(existingMerchandise);
+      // console.log(existingMerchandise);
       if (!existingMerchandise) {
         state.cartBandMerchandise.push({
           id: merchandise.id,
@@ -163,19 +163,23 @@ const cartSlice = createSlice({
           productDescription: merchandise.productDescription,
         });
       } else {
+        const existingMerchandiseIdx = state.cartBandMerchandise.findIndex(
+          (item) => item.id === existingMerchandise.id
+        );
         existingMerchandise.quantity++;
-        existingMerchandise.price += merchandise.price;
+        // existingMerchandise.productPrice += merchandise.productPrice;
       }
-      console.log(existingMerchandise);
+      console.log(state.cartBandMerchandise);
     },
     removeMechandiseFromCart(state, action) {
       const merchandise = action.payload;
-      const existingMerchandise = state.cartBandMerchandise.find(
-        (item) => item.id === merchandise.id
-      );
-      if (existingMerchandise.quanity > 2) {
-        existingMerchandise.quantity--;
-        existingMerchandise.price -= merchandise.price;
+      if (merchandise.quantity > 2) {
+        const merchandiseIdx = state.cartBandMerchandise.findIndex(
+          (item) => item.id === merchandise.id
+        );
+        state.cartBandMerchandise[merchandiseIdx].quantity--;
+        // state.cartBandMerchandise[merchandiseIdx].price =
+        // existingMerchandise.price -= merchandise.price;
       } else {
         state.cartBandMerchandise = state.cartBandMerchandise.filter(
           (item) => item.id !== merchandise.id
